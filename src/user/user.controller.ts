@@ -13,7 +13,7 @@ import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { LoginUserDto, RegisterUserDto } from './user.model';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-@ApiBearerAuth()
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(
@@ -21,38 +21,29 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
-  @ApiTags('User')
   @ApiBody({ type: LoginUserDto })
   @Public()
   @Post('login')
-  login(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  login(
+    @Body('username') username: string,
+    @Body('password') password: string,
+  ) {
+    return this.authService.signIn(username, password);
   }
 
-  @ApiTags('User')
   @ApiBody({ type: RegisterUserDto })
   @Public()
   @Post()
-  register(@Body() registerDto: Record<string, any>) {
-    return this.userService.create(
-      registerDto.email,
-      registerDto.password,
-      registerDto.permissionLevel,
-      registerDto.firstName,
-      registerDto.lastName,
-      registerDto.dob,
-      registerDto.username,
-      registerDto.mb,
-      registerDto.address,
-      registerDto.zip,
-      registerDto.website,
-      registerDto.avatar,
-      registerDto.targetGroups,
-      registerDto.phoneNumber,
-    );
+  register(
+    @Body('username') username: string,
+    @Body('email') email: string,
+    @Body('password') password: string,
+    @Body('permissionLevel') permissionLevel: number,
+  ) {
+    return this.userService.create(username, email, password, permissionLevel);
   }
 
-  @ApiTags('User')
+  @ApiBearerAuth()
   @Get('profile')
   @UseGuards(AuthGuard)
   getProfile(@Request() req) {
