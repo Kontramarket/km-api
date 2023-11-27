@@ -2,16 +2,16 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Admin, RegisterAdminDto, UpdateAdminDto } from './admin.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/user/user.model';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectModel('admin') private readonly adminModel: Model<Admin>,
-    @InjectModel('user') private readonly userModel: Model<User>,
+    private userService: UserService,
   ) {}
   async create(registerAdminDto: RegisterAdminDto) {
-    if (!(await this.userModel.findById(registerAdminDto.userId))) {
+    if (!(await this.userService.getByUserId(registerAdminDto.userId))) {
       throw new ForbiddenException();
     }
     const newAdmin = new this.adminModel(registerAdminDto);

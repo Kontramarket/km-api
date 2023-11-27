@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.model';
@@ -11,19 +11,21 @@ export class UserService {
   async getByUsername(username: string) {
     return this.userModel.findOne({ username });
   }
-
+  async getByUserId(id: string) {
+    return this.userModel.findById(id);
+  }
   async create(
     username: string,
     email: string,
     password: string,
     permissionLevel: number,
   ) {
-    if (1 < permissionLevel && permissionLevel < 2) {
-      throw new HttpException(
-        'User type incorrect',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    // if (1 < permissionLevel && permissionLevel < 2) {
+    //   throw new HttpException(
+    //     'User type incorrect',
+    //     HttpStatus.INTERNAL_SERVER_ERROR,
+    //   );
+    // }
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltOrRounds);
     const newUser = new this.userModel({

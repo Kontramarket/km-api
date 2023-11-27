@@ -9,8 +9,6 @@ async function bootstrap() {
     .setDescription('Kontramarket API used for data logics')
     .setVersion('1.0')
     .addBearerAuth()
-    .addTag('User')
-    .addTag('Admin')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

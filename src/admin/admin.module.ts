@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AdminSchema } from './admin.model';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { UserSchema } from 'src/user/user.model';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -14,11 +14,8 @@ import { UserSchema } from 'src/user/user.model';
         name: 'admin',
         schema: AdminSchema,
       },
-      {
-        name: 'user',
-        schema: UserSchema,
-      },
     ]),
+    UserModule,
   ],
   controllers: [AdminController],
   providers: [

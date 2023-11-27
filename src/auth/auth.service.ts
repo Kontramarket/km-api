@@ -15,21 +15,14 @@ export class AuthService {
     if (!passwordValid) {
       throw new UnauthorizedException();
     }
-    switch (user.permissionLevel) {
-      case 0:
-        break;
-
-      case 1:
-        break;
-
-      case 2:
-        break;
-
-      case 3:
-    }
-    const payload = { userId: user._id, username: user.username };
+    const payload = {
+      userId: user._id,
+      username: user.username,
+      permissionLevel: user.permissionLevel,
+    };
     return {
       access_token: await this.jwtService.signAsync(payload),
+      permissionLevel: user.permissionLevel,
     };
   }
 }

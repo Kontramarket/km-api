@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Request,
+} from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { RegisterAdminDto, UpdateAdminDto } from './admin.model';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/metadata';
 
 @ApiBearerAuth()
 @ApiTags('Admin')
@@ -9,14 +18,15 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
+  @Public()
   @Post()
   create(@Body() registerAdminDto: RegisterAdminDto) {
     return this.adminService.create(registerAdminDto);
   }
 
-  @Get(':userId')
-  findOne(@Param('userId') userId: string) {
-    return this.adminService.findOne(userId);
+  @Get()
+  findOne(@Request() req) {
+    return this.adminService.findOne(req.user.userId);
   }
 
   @Patch(':userId')
