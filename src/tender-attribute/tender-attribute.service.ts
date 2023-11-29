@@ -26,7 +26,7 @@ export class TenderAttributeService {
   }
 
   async findOne(id: string) {
-    return await this.tenderAttributeModel.findById(id);
+    return await this.tenderAttributeModel.find({ groupId: id });
   }
 
   async update(id: string, updateTenderAttributeDto: UpdateTenderAttributeDto) {

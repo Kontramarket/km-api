@@ -11,10 +11,9 @@ export const TenderAttributeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    //Types 0:Text, 1:Number, 2: Checkbox, 3: Radius, 4: Dropdown
     type: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: 'Text',
     },
     hidden: {
       type: Boolean,
@@ -28,7 +27,7 @@ export interface TenderAttribute extends mongoose.Document {
   _id: string;
   groupId: string;
   name: string;
-  type: number;
+  type: string;
   hidden: boolean;
 }
 
@@ -38,7 +37,7 @@ export class CreateTenderAttributeDto {
   @ApiProperty()
   name: string;
   @ApiProperty()
-  type: number;
+  type: string;
 }
 
 export class UpdateTenderAttributeDto {
@@ -47,5 +46,5 @@ export class UpdateTenderAttributeDto {
   @ApiProperty()
   name: string;
   @ApiProperty()
-  type: number;
+  type: string;
 }

@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { TenderGroupService } from './tender-group.service';
 import {
   CreateTenderGroupDto,
@@ -41,10 +33,5 @@ export class TenderGroupController {
     @Body() updateTenderGroupDto: UpdateTenderGroupDto,
   ) {
     return this.tenderGroupService.update(id, updateTenderGroupDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tenderGroupService.remove(id);
   }
 }

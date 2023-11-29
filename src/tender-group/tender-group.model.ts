@@ -9,8 +9,9 @@ export const TenderGroupSchema = new mongoose.Schema(
       unique: true,
     },
     parentGroup: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       default: '',
+      ref: 'tender-group',
     },
     hidden: {
       type: Boolean,
@@ -39,4 +40,6 @@ export class UpdateTenderGroupDto {
   name: string;
   @ApiProperty()
   parentGroup: string;
+  @ApiProperty()
+  hidden: boolean;
 }

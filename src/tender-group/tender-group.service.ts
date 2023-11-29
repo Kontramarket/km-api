@@ -20,7 +20,7 @@ export class TenderGroupService {
   }
 
   async findAll() {
-    return await this.tenderGroupModel.find();
+    return await this.tenderGroupModel.find().populate('parentGroup');
   }
 
   async findOne(id: string) {
@@ -29,15 +29,8 @@ export class TenderGroupService {
 
   async update(id: string, updateTenderGroupDto: UpdateTenderGroupDto) {
     return await this.tenderGroupModel.findOneAndUpdate(
-      { id },
-      { updateTenderGroupDto },
-    );
-  }
-
-  async remove(id: string) {
-    return await this.tenderGroupModel.findOneAndUpdate(
-      { id },
-      { hidden: true },
+      { _id: id },
+      updateTenderGroupDto,
     );
   }
 }
