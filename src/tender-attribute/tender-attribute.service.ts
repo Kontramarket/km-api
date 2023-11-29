@@ -30,10 +30,11 @@ export class TenderAttributeService {
   }
 
   async update(id: string, updateTenderAttributeDto: UpdateTenderAttributeDto) {
-    return await this.tenderAttributeModel.findByIdAndUpdate(
-      { id },
-      { updateTenderAttributeDto },
+    const attib = await this.tenderAttributeModel.findByIdAndUpdate(
+      { _id: id },
+      updateTenderAttributeDto,
     );
+    return await this.tenderAttributeModel.find({ groupId: attib.groupId });
   }
 
   async remove(id: string) {
