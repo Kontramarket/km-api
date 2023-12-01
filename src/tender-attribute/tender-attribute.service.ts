@@ -18,7 +18,9 @@ export class TenderAttributeService {
       createTenderAttributeDto,
     );
     await newTenderAttribute.save();
-    return newTenderAttribute;
+    return await this.tenderAttributeModel.find({
+      groupId: createTenderAttributeDto.groupId,
+    });
   }
 
   async findAll() {
