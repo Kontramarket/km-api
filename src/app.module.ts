@@ -5,14 +5,13 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
-import { StandardUserModule } from './standard-user/standard-user.module';
-import { CompanyUserModule } from './company-user/company-user.module';
-import { SupportUserModule } from './support-user/support-user.module';
 import { TenderGroupModule } from './tender-group/tender-group.module';
 import { TenderAttributeModule } from './tender-attribute/tender-attribute.module';
 import { TenderModule } from './tender/tender.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { UserGroupModule } from './user-group/user-group.module';
+import { UserAttributeModule } from './user-attribute/user-attribute.module';
 
 //Mongo nikolarakic M8ZuWxaErw6DZdws
 
@@ -25,12 +24,11 @@ import { AuthGuard } from './auth/auth.guard';
     UserModule,
     AuthModule,
     AdminModule,
-    StandardUserModule,
-    CompanyUserModule,
-    SupportUserModule,
     TenderGroupModule,
     TenderAttributeModule,
     TenderModule,
+    UserGroupModule,
+    UserAttributeModule,
   ],
   controllers: [AppController],
   providers: [

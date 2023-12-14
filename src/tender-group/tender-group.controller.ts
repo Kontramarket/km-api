@@ -5,6 +5,7 @@ import {
   UpdateTenderGroupDto,
 } from './tender-group.model';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Admin } from 'src/metadata';
 
 @ApiBearerAuth()
 @ApiTags('Tender Group')
@@ -12,6 +13,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class TenderGroupController {
   constructor(private readonly tenderGroupService: TenderGroupService) {}
 
+  @Admin()
   @Post()
   create(@Body() createTenderGroupDto: CreateTenderGroupDto) {
     return this.tenderGroupService.create(createTenderGroupDto);
@@ -27,6 +29,7 @@ export class TenderGroupController {
     return this.tenderGroupService.findOne(id);
   }
 
+  @Admin()
   @Patch(':id')
   update(
     @Param('id') id: string,

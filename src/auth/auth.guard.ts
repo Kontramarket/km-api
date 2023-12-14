@@ -7,7 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { Request } from 'express';
-import { IS_PUBLIC_KEY } from 'src/metadata';
+import { IS_ADMIN_KEY, IS_PUBLIC_KEY } from 'src/metadata';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
@@ -38,6 +38,24 @@ export class AuthGuard implements CanActivate {
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
       request['user'] = payload;
+      //Check if is admin
+      const isAdmin = this.reflector.getAllAndOverride<boolean>(IS_ADMIN_KEY, [
+        context.getHandler(),
+        context.getClass(),
+      ]);
+      if (isAdmin) {
+        if (payload.permissionLevel == 0) {
+          return true;
+        }
+        return false;
+      }
+      const isElevated = this.reflector.getAllAndOverride<boolean>(
+        payload.permissionLevel,
+        [context.getHandler(), context.getClass()],
+      );
+      if (isElevated) {
+        return true;
+      }
     } catch {
       throw new UnauthorizedException();
     }

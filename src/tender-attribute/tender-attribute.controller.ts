@@ -13,6 +13,7 @@ import {
   CreateTenderAttributeDto,
   UpdateTenderAttributeDto,
 } from './tender-attribute.model';
+import { Admin } from 'src/metadata';
 
 @ApiBearerAuth()
 @ApiTags('Tender Attribute')
@@ -22,6 +23,7 @@ export class TenderAttributeController {
     private readonly tenderAttributeService: TenderAttributeService,
   ) {}
 
+  @Admin()
   @Post()
   create(@Body() createTenderAttributeDto: CreateTenderAttributeDto) {
     return this.tenderAttributeService.create(createTenderAttributeDto);
@@ -37,6 +39,7 @@ export class TenderAttributeController {
     return this.tenderAttributeService.findOne(id);
   }
 
+  @Admin()
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -45,6 +48,7 @@ export class TenderAttributeController {
     return this.tenderAttributeService.update(id, updateTenderAttributeDto);
   }
 
+  @Admin()
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.tenderAttributeService.remove(id);
