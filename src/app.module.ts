@@ -12,6 +12,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { UserGroupModule } from './user-group/user-group.module';
 import { UserAttributeModule } from './user-attribute/user-attribute.module';
+import { LoggerModule } from './logger/logger.module';
 
 //Mongo nikolarakic M8ZuWxaErw6DZdws
 
@@ -29,6 +30,7 @@ import { UserAttributeModule } from './user-attribute/user-attribute.module';
     TenderModule,
     UserGroupModule,
     UserAttributeModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [

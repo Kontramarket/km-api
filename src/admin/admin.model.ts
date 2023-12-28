@@ -16,6 +16,11 @@ export const AdminSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    change: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { timestamps: true },
 );
@@ -25,6 +30,7 @@ export interface Admin extends mongoose.Document {
   userId: string;
   firstName: string;
   lastName: string;
+  change: string;
 }
 
 export class RegisterAdminDto {

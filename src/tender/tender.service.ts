@@ -14,6 +14,7 @@ export class TenderService {
       ownerId: user.userId,
       groupId: createTenderDto.groupId,
       data: createTenderDto.data,
+      change: user.userId,
     });
     await newTender.save();
     return newTender;
@@ -27,14 +28,17 @@ export class TenderService {
     return await this.tenderModel.findById(id);
   }
 
-  async update(id: string, updateTenderDto: UpdateTenderDto) {
+  async update(id: string, updateTenderDto: UpdateTenderDto, userId: string) {
     return await this.tenderModel.findByIdAndUpdate(
       { id },
-      { updateTenderDto },
+      { ...updateTenderDto, change: userId },
     );
   }
 
-  async remove(id: string) {
-    return await this.tenderModel.findByIdAndUpdate({ id }, { hidden: true });
+  async remove(id: string, userId: string) {
+    return await this.tenderModel.findByIdAndUpdate(
+      { id },
+      { hidden: true, change: userId },
+    );
   }
 }

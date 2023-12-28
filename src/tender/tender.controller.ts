@@ -34,12 +34,16 @@ export class TenderController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTenderDto: UpdateTenderDto) {
-    return this.tenderService.update(id, updateTenderDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateTenderDto: UpdateTenderDto,
+    @Request() req,
+  ) {
+    return this.tenderService.update(id, updateTenderDto, req.user.userId);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tenderService.remove(id);
+  remove(@Param('id') id: string, @Request() req) {
+    return this.tenderService.remove(id, req.user.userId);
   }
 }

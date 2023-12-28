@@ -19,6 +19,11 @@ export const TenderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    change: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { timestamps: true },
 );
@@ -29,6 +34,7 @@ export interface Tender extends mongoose.Document {
   ownerId: string;
   data: Array<string>;
   hidden: boolean;
+  change: string;
 }
 
 export class CreateTenderDto {

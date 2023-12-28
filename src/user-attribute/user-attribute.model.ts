@@ -19,6 +19,11 @@ export const UserAttributeSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    change: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { timestamps: true },
 );
@@ -29,6 +34,7 @@ export interface UserAttribute extends mongoose.Document {
   name: string;
   type: string;
   hidden: boolean;
+  change: string;
 }
 
 export class CreateUserAttributeDto {

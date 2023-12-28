@@ -13,8 +13,11 @@ export class UserGroupService {
     @InjectModel('user-group')
     private readonly userGroupModel: Model<UserGroup>,
   ) {}
-  async create(createUserGroupDto: CreateUserGroupDto) {
-    const newUserGroup = new this.userGroupModel(createUserGroupDto);
+  async create(createUserGroupDto: CreateUserGroupDto, userId: string) {
+    const newUserGroup = new this.userGroupModel({
+      ...createUserGroupDto,
+      change: userId,
+    });
     await newUserGroup.save();
     return await this.userGroupModel.find().populate('parentGroup');
   }
@@ -27,8 +30,15 @@ export class UserGroupService {
     return await this.userGroupModel.findById(id);
   }
 
-  async update(id: string, updateUserGroupDto: UpdateUserGroupDto) {
-    await this.userGroupModel.findOneAndUpdate({ _id: id }, updateUserGroupDto);
+  async update(
+    id: string,
+    updateUserGroupDto: UpdateUserGroupDto,
+    userId: string,
+  ) {
+    await this.userGroupModel.findOneAndUpdate(
+      { _id: id },
+      { ...updateUserGroupDto, change: userId },
+    );
     return await this.userGroupModel.find().populate('parentGroup');
   }
 }

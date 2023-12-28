@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { TenderAttributeService } from './tender-attribute.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -25,8 +26,14 @@ export class TenderAttributeController {
 
   @Admin()
   @Post()
-  create(@Body() createTenderAttributeDto: CreateTenderAttributeDto) {
-    return this.tenderAttributeService.create(createTenderAttributeDto);
+  create(
+    @Body() createTenderAttributeDto: CreateTenderAttributeDto,
+    @Request() req,
+  ) {
+    return this.tenderAttributeService.create(
+      createTenderAttributeDto,
+      req.user.userId,
+    );
   }
 
   @Get()
@@ -44,13 +51,18 @@ export class TenderAttributeController {
   update(
     @Param('id') id: string,
     @Body() updateTenderAttributeDto: UpdateTenderAttributeDto,
+    @Request() req,
   ) {
-    return this.tenderAttributeService.update(id, updateTenderAttributeDto);
+    return this.tenderAttributeService.update(
+      id,
+      updateTenderAttributeDto,
+      req.user.userId,
+    );
   }
 
   @Admin()
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tenderAttributeService.remove(id);
+  remove(@Param('id') id: string, @Request() req) {
+    return this.tenderAttributeService.remove(id, req.user.userId);
   }
 }

@@ -22,6 +22,11 @@ export const UserSchema = new mongoose.Schema(
       required: true,
       enum: [0, 1, 2, 3],
     },
+    change: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { timestamps: true },
 );
@@ -32,6 +37,7 @@ export interface User extends mongoose.Document {
   email: string;
   password: string;
   permissionLevel: number;
+  change: string;
 }
 
 export class RegisterUserDto {

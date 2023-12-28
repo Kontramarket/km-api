@@ -33,7 +33,8 @@ export class AdminController {
   update(
     @Param('userId') userId: string,
     @Body() updateAdminDto: UpdateAdminDto,
+    @Request() req,
   ) {
-    return this.adminService.update(userId, updateAdminDto);
+    return this.adminService.update(userId, updateAdminDto, req.user.userId);
   }
 }

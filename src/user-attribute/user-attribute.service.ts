@@ -13,10 +13,11 @@ export class UserAttributeService {
     @InjectModel('user-attribute')
     private readonly userAttributeModel: Model<UserAttribute>,
   ) {}
-  async create(createUserAttributeDto: CreateUserAttributeDto) {
-    const newUserAttribute = new this.userAttributeModel(
-      createUserAttributeDto,
-    );
+  async create(createUserAttributeDto: CreateUserAttributeDto, userId: string) {
+    const newUserAttribute = new this.userAttributeModel({
+      ...createUserAttributeDto,
+      change: userId,
+    });
     await newUserAttribute.save();
     return await this.userAttributeModel.find({
       groupId: createUserAttributeDto.groupId,
@@ -31,18 +32,22 @@ export class UserAttributeService {
     return await this.userAttributeModel.find({ groupId: id });
   }
 
-  async update(id: string, updateUserAttributeDto: UpdateUserAttributeDto) {
+  async update(
+    id: string,
+    updateUserAttributeDto: UpdateUserAttributeDto,
+    userId: string,
+  ) {
     const attib = await this.userAttributeModel.findByIdAndUpdate(
       { _id: id },
-      updateUserAttributeDto,
+      { ...updateUserAttributeDto, change: userId },
     );
     return await this.userAttributeModel.find({ groupId: attib.groupId });
   }
 
-  async remove(id: string) {
+  async remove(id: string, userId: string) {
     return await this.userAttributeModel.findOneAndUpdate(
       { id },
-      { hidden: true },
+      { hidden: true, change: userId },
     );
   }
 }

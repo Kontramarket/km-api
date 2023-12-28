@@ -17,6 +17,11 @@ export const TenderGroupSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    change: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { timestamps: true },
 );
@@ -26,6 +31,7 @@ export interface TenderGroup extends mongoose.Document {
   name: string;
   parentGroup: string;
   hidden: boolean;
+  change: string;
 }
 
 export class CreateTenderGroupDto {

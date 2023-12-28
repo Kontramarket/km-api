@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Request,
+} from '@nestjs/common';
 import { UserGroupService } from './user-group.service';
 import { CreateUserGroupDto, UpdateUserGroupDto } from './user-group.model';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -12,8 +20,8 @@ export class UserGroupController {
 
   @Admin()
   @Post()
-  create(@Body() createUserGroupDto: CreateUserGroupDto) {
-    return this.userGroupService.create(createUserGroupDto);
+  create(@Body() createUserGroupDto: CreateUserGroupDto, @Request() req) {
+    return this.userGroupService.create(createUserGroupDto, req.user.userId);
   }
 
   @Get()
@@ -31,7 +39,12 @@ export class UserGroupController {
   update(
     @Param('id') id: string,
     @Body() updateUserGroupDto: UpdateUserGroupDto,
+    @Request() req,
   ) {
-    return this.userGroupService.update(id, updateUserGroupDto);
+    return this.userGroupService.update(
+      id,
+      updateUserGroupDto,
+      req.user.userId,
+    );
   }
 }

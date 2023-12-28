@@ -13,8 +13,11 @@ export class TenderGroupService {
     @InjectModel('tender-group')
     private readonly tenderGroupModel: Model<TenderGroup>,
   ) {}
-  async create(createTenderGroupDto: CreateTenderGroupDto) {
-    const newTenderGroup = new this.tenderGroupModel(createTenderGroupDto);
+  async create(createTenderGroupDto: CreateTenderGroupDto, userId: string) {
+    const newTenderGroup = new this.tenderGroupModel({
+      ...createTenderGroupDto,
+      change: userId,
+    });
     await newTenderGroup.save();
     return await this.tenderGroupModel.find().populate('parentGroup');
   }
@@ -27,10 +30,14 @@ export class TenderGroupService {
     return await this.tenderGroupModel.findById(id);
   }
 
-  async update(id: string, updateTenderGroupDto: UpdateTenderGroupDto) {
+  async update(
+    id: string,
+    updateTenderGroupDto: UpdateTenderGroupDto,
+    userId: string,
+  ) {
     await this.tenderGroupModel.findOneAndUpdate(
       { _id: id },
-      updateTenderGroupDto,
+      { ...updateTenderGroupDto, change: userId },
     );
     return await this.tenderGroupModel.find().populate('parentGroup');
   }

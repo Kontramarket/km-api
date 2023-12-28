@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Request,
+} from '@nestjs/common';
 import { TenderGroupService } from './tender-group.service';
 import {
   CreateTenderGroupDto,
@@ -15,8 +23,11 @@ export class TenderGroupController {
 
   @Admin()
   @Post()
-  create(@Body() createTenderGroupDto: CreateTenderGroupDto) {
-    return this.tenderGroupService.create(createTenderGroupDto);
+  create(@Body() createTenderGroupDto: CreateTenderGroupDto, @Request() req) {
+    return this.tenderGroupService.create(
+      createTenderGroupDto,
+      req.user.userId,
+    );
   }
 
   @Get()
@@ -34,7 +45,12 @@ export class TenderGroupController {
   update(
     @Param('id') id: string,
     @Body() updateTenderGroupDto: UpdateTenderGroupDto,
+    @Request() req,
   ) {
-    return this.tenderGroupService.update(id, updateTenderGroupDto);
+    return this.tenderGroupService.update(
+      id,
+      updateTenderGroupDto,
+      req.user.userId,
+    );
   }
 }

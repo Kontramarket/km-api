@@ -17,6 +17,11 @@ export const UserGroupSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    change: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { timestamps: true },
 );
@@ -26,6 +31,7 @@ export interface UserGroup extends mongoose.Document {
   name: string;
   parentGroup: string;
   hidden: boolean;
+  change: string;
 }
 
 export class CreateUserGroupDto {

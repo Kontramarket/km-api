@@ -27,7 +27,13 @@ export class AdminService {
     return await this.adminModel.findOne({ userId });
   }
 
-  async update(userId: string, updateAdminDto: UpdateAdminDto) {
-    return await this.adminModel.updateOne({ userId }, updateAdminDto);
+  async update(userId: string, updateAdminDto: UpdateAdminDto, userChangeId) {
+    return await this.adminModel.updateOne(
+      { userId },
+      {
+        ...updateAdminDto,
+        change: userChangeId,
+      },
+    );
   }
 }

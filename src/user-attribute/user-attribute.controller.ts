@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { UserAttributeService } from './user-attribute.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -23,8 +24,14 @@ export class UserAttributeController {
 
   @Admin()
   @Post()
-  create(@Body() createUserAttributeDto: CreateUserAttributeDto) {
-    return this.userAttributeService.create(createUserAttributeDto);
+  create(
+    @Body() createUserAttributeDto: CreateUserAttributeDto,
+    @Request() req,
+  ) {
+    return this.userAttributeService.create(
+      createUserAttributeDto,
+      req.user.userId,
+    );
   }
 
   @Get()
@@ -42,13 +49,18 @@ export class UserAttributeController {
   update(
     @Param('id') id: string,
     @Body() updateUserAttributeDto: UpdateUserAttributeDto,
+    @Request() req,
   ) {
-    return this.userAttributeService.update(id, updateUserAttributeDto);
+    return this.userAttributeService.update(
+      id,
+      updateUserAttributeDto,
+      req.user.userId,
+    );
   }
 
   @Admin()
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userAttributeService.remove(id);
+  remove(@Param('id') id: string, @Request() req) {
+    return this.userAttributeService.remove(id, req.user.userId);
   }
 }
