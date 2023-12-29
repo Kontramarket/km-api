@@ -10,10 +10,19 @@ import { TenderSchema } from 'src/tender/tender.model';
 import { UserGroupSchema } from 'src/user-group/user-group.model';
 import { UserAttributeSchema } from 'src/user-attribute/user-attribute.model';
 import { UserSchema } from 'src/user/user.model';
+import { CardSchema, KanbanSchema } from 'src/kanban/kanban.model';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
+      {
+        name: 'kanban',
+        schema: KanbanSchema,
+      },
+      {
+        name: 'card',
+        schema: CardSchema,
+      },
       {
         name: 'log',
         schema: LoggerSchema,

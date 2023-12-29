@@ -9,6 +9,7 @@ import { UserAttribute } from 'src/user-attribute/user-attribute.model';
 import { UserGroup } from 'src/user-group/user-group.model';
 import { User } from 'src/user/user.model';
 import { Log } from './logger.model';
+import { Card, Kanban } from 'src/kanban/kanban.model';
 
 @Injectable()
 export class LoggerService implements OnModuleInit {
@@ -23,6 +24,8 @@ export class LoggerService implements OnModuleInit {
     private userAttributeModel: Model<UserAttribute>,
     @InjectModel('user') private userModel: Model<User>,
     @InjectModel('admin') private adminModel: Model<Admin>,
+    @InjectModel('kanban') private kanbanModel: Model<Kanban>,
+    @InjectModel('card') private cardModel: Model<Card>,
   ) {}
 
   onModuleInit() {
@@ -51,6 +54,12 @@ export class LoggerService implements OnModuleInit {
     this.adminModel.collection.watch<Admin>().on('change', (e) => {
       this.createRecord(e, 'admin');
     });
+    this.kanbanModel.collection.watch<Kanban>().on('change', (e) => {
+      this.createRecord(e, 'kanban');
+    });
+    this.cardModel.collection.watch<Card>().on('change', (e) => {
+      this.createRecord(e, 'card');
+    });
   }
 
   async createRecord(data, model: string) {
@@ -76,6 +85,12 @@ export class LoggerService implements OnModuleInit {
         break;
       case 'admin':
         oldRecord = await this.adminModel.findById(data.documentKey);
+        break;
+      case 'kanban':
+        oldRecord = await this.kanbanModel.findById(data.documentKey);
+        break;
+      case 'card':
+        oldRecord = await this.cardModel.findById(data.documentKey);
         break;
     }
     const logData = {

@@ -13,6 +13,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { UserGroupModule } from './user-group/user-group.module';
 import { UserAttributeModule } from './user-attribute/user-attribute.module';
 import { LoggerModule } from './logger/logger.module';
+import { KanbanModule } from './kanban/kanban.module';
 
 //Mongo nikolarakic M8ZuWxaErw6DZdws
 
@@ -31,6 +32,7 @@ import { LoggerModule } from './logger/logger.module';
     UserGroupModule,
     UserAttributeModule,
     LoggerModule,
+    KanbanModule,
   ],
   controllers: [AppController],
   providers: [
