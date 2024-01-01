@@ -31,7 +31,7 @@ import { KanbanModule } from './kanban/kanban.module';
     TenderModule,
     UserGroupModule,
     UserAttributeModule,
-    LoggerModule,
+    // LoggerModule,
     KanbanModule,
   ],
   controllers: [AppController],
