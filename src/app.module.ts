@@ -14,6 +14,7 @@ import { UserGroupModule } from './user-group/user-group.module';
 import { UserAttributeModule } from './user-attribute/user-attribute.module';
 import { LoggerModule } from './logger/logger.module';
 import { KanbanModule } from './kanban/kanban.module';
+import { NewsModule } from './news/news.module';
 
 //Mongo nikolarakic M8ZuWxaErw6DZdws
 
@@ -33,6 +34,7 @@ import { KanbanModule } from './kanban/kanban.module';
     UserAttributeModule,
     // LoggerModule,
     KanbanModule,
+    NewsModule,
   ],
   controllers: [AppController],
   providers: [
