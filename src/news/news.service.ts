@@ -16,11 +16,11 @@ export class NewsService {
   }
 
   findByType(type: string) {
-    return this.newsModel.find({ type: type });
+    return this.newsModel.find({ type: type }).sort({ createdAt: 'desc' });
   }
 
   findAll() {
-    return this.newsModel.find();
+    return this.newsModel.find().sort({ createdAt: 'desc' });
   }
 
   findOne(id: string) {
