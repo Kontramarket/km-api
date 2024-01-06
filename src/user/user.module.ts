@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthService } from 'src/auth/auth.service';
+import { MailServiceService } from 'src/mail-service/mail-service.service';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthService } from 'src/auth/auth.service';
       useClass: AuthGuard,
     },
     AuthService,
+    MailServiceService,
   ],
   exports: [UserService],
 })

@@ -57,3 +57,11 @@ export class LoginUserDto {
   @ApiProperty()
   password: string;
 }
+export class PasswordResetDto {
+  @ApiProperty()
+  email: string;
+}
+export class PasswordRecoveryDto {
+  @ApiProperty()
+  newPassword: string;
+}

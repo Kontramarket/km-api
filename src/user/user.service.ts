@@ -11,6 +11,9 @@ export class UserService {
   async getByUsername(username: string) {
     return this.userModel.findOne({ username });
   }
+  async getByEmail(email: string) {
+    return this.userModel.findOne({ email });
+  }
   async getByUserId(id: string) {
     return this.userModel.findById(id);
   }
@@ -36,5 +39,23 @@ export class UserService {
     });
     await newUser.save();
     return newUser;
+  }
+  async createPasswordResetUrl(id: string) {
+    const hash = await bcrypt.genSalt(20);
+    await this.userModel.findByIdAndUpdate(id, {
+      password: hash,
+    });
+    return 'https://kontramarket.com:3001/reset-password?token=' + hash;
+  }
+  async passwordRecovery(token: string, newPassword: string) {
+    const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds);
+    await this.userModel.findOneAndUpdate(
+      { password: token },
+      {
+        password: hashedPassword,
+      },
+    );
+    return { status: true };
   }
 }
