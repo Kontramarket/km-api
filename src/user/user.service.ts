@@ -45,7 +45,10 @@ export class UserService {
     await this.userModel.findByIdAndUpdate(id, {
       password: hash,
     });
-    return 'https://kontramarket.com:3001/reset-password?token=' + hash;
+    return (
+      'https://kontramarket-corporate-8d31bf3141fd.herokuapp.com/reset-password?token=' +
+      hash
+    );
   }
   async passwordRecovery(token: string, newPassword: string) {
     const saltOrRounds = 10;

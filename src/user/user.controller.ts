@@ -65,16 +65,13 @@ export class UserController {
     const user = await this.userService.getByEmail(email);
     if (user) {
       const resetUrl = await this.userService.createPasswordResetUrl(user._id);
+      await this.mailService.passwordResetCMS(email, user.username, resetUrl);
       return {
-        status: await this.mailService.passwordResetCMS(
-          email,
-          user.username,
-          resetUrl,
-        ),
+        status: true,
       };
     } else {
       return {
-        status: true,
+        status: false,
       };
     }
   }
