@@ -20,6 +20,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { MailServiceModule } from './mail-service/mail-service.module';
+import { ChatServiceModule } from './chat-service/chat-service.module';
 
 //Mongo nikolarakic M8ZuWxaErw6DZdws
 //no-reply@kontramarket.com 1Y,z~0jTTe=B
@@ -63,6 +64,7 @@ import { MailServiceModule } from './mail-service/mail-service.module';
     NewsModule,
     FileManagerModule,
     MailServiceModule,
+    ChatServiceModule,
   ],
   controllers: [AppController],
   providers: [

@@ -22,8 +22,10 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^10.0.2",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.3.0",
     "@nestjs/swagger": "^7.1.16",
     "@nestjs/throttler": "^5.1.1",
+    "@nestjs/websockets": "^10.3.0",
     "@types/mongoose": "^5.11.97",
     "aws-sdk": "^2.1531.0",
     "bcrypt": "^5.1.1",
@@ -32,7 +34,8 @@
     "nodemailer": "^6.9.8",
     "pug": "^3.0.2",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.7.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
