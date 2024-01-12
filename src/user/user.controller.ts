@@ -32,11 +32,11 @@ export class UserController {
   @ApiBody({ type: LoginUserDto })
   @Public()
   @Post('login')
-  login(
+  async login(
     @Body('username') username: string,
     @Body('password') password: string,
   ) {
-    return this.authService.signIn(username, password);
+    return await this.authService.signIn(username, password);
   }
 
   @ApiBody({ type: RegisterUserDto })
@@ -84,5 +84,16 @@ export class UserController {
     @Body('newPassword') newPassword: string,
   ) {
     return await this.userService.passwordRecovery(token, newPassword);
+  }
+
+  @ApiBearerAuth()
+  @Get('admins')
+  getAdmins() {
+    return this.userService.getAdmins();
+  }
+  @ApiBearerAuth()
+  @Get(':userId')
+  getUser(@Param('userId') userId: string) {
+    return this.userService.getByUserId(userId);
   }
 }

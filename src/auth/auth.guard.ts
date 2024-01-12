@@ -44,7 +44,7 @@ export class AuthGuard implements CanActivate {
         context.getClass(),
       ]);
       if (isAdmin) {
-        if (payload.permissionLevel == 0) {
+        if (payload.permissionLevel == '0') {
           return true;
         }
         return false;

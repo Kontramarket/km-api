@@ -18,14 +18,17 @@ export const UserSchema = new mongoose.Schema(
       required: true,
     },
     permissionLevel: {
-      type: Number,
+      type: String,
       required: true,
-      enum: [0, 1, 2, 3],
     },
     change: {
       type: mongoose.Types.ObjectId,
       ref: 'user',
       required: true,
+    },
+    online: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },
@@ -38,6 +41,7 @@ export interface User extends mongoose.Document {
   password: string;
   permissionLevel: number;
   change: string;
+  online: boolean;
 }
 
 export class RegisterUserDto {
@@ -48,7 +52,7 @@ export class RegisterUserDto {
   @ApiProperty()
   password: string;
   @ApiProperty()
-  permissionLevel: number;
+  permissionLevel: string;
 }
 
 export class LoginUserDto {

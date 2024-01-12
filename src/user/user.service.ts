@@ -3,10 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.model';
 import * as bcrypt from 'bcrypt';
+import { UserGroup } from 'src/user-group/user-group.model';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('user') private readonly userModel: Model<User>) {}
+  constructor(
+    @InjectModel('user') private readonly userModel: Model<User>,
+    @InjectModel('user-group') private readonly userGroups: Model<UserGroup>,
+  ) {}
 
   async getByUsername(username: string) {
     return this.userModel.findOne({ username });
@@ -60,5 +64,27 @@ export class UserService {
       },
     );
     return { status: true };
+  }
+  async getAdmins() {
+    const allAdmins = [];
+    const admins = await this.userModel.find({ permissionLevel: 0 });
+    admins.forEach((admin) => {
+      allAdmins.push(admin);
+    });
+    const elevatedAdminGroups = await this.userGroups.find({
+      parentGroup: await this.userGroups.findById('659489598dd4899f1add104d'),
+    });
+    elevatedAdminGroups.forEach(async (group) => {
+      const userGroupAdmin = await this.userModel.find({
+        permissionLevel: group._id,
+      });
+      userGroupAdmin.forEach((user) => {
+        allAdmins.push(user);
+      });
+    });
+    return allAdmins;
+  }
+  async setStatus(id: string, online: boolean) {
+    return await this.userModel.findByIdAndUpdate(id, { online: online });
   }
 }

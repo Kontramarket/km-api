@@ -7,6 +7,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthService } from 'src/auth/auth.service';
 import { MailServiceService } from 'src/mail-service/mail-service.service';
+import { UserGroupSchema } from 'src/user-group/user-group.model';
 
 @Module({
   imports: [
@@ -14,6 +15,12 @@ import { MailServiceService } from 'src/mail-service/mail-service.service';
       {
         name: 'user',
         schema: UserSchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: 'user-group',
+        schema: UserGroupSchema,
       },
     ]),
   ],
