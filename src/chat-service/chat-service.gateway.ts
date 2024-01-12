@@ -7,7 +7,9 @@ import { Server } from 'socket.io';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from '../auth/constants';
+import { Public } from 'src/metadata';
 
+@Public()
 @WebSocketGateway({ cors: true })
 export class ChatServiceGateway {
   constructor(
