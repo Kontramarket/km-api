@@ -18,6 +18,7 @@ export class ChatServiceGateway {
   ) {}
   @WebSocketServer() server: Server;
 
+  
   @SubscribeMessage('connected')
   async handleConnection(client: any, payload: any) {
     const selfStatus = await this.userService.setStatus(
