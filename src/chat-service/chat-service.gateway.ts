@@ -65,7 +65,7 @@ export class ChatServiceGateway {
       payload.newMessage,
     );
     chat.users.forEach((user) => {
-      this.server.to(user.toString()).emit('message' + chat._id, newMessage);
+      this.server.to(user.toString()).emit('message:' + chat._id, newMessage);
     });
   }
   @SubscribeMessage('seen')
@@ -75,7 +75,7 @@ export class ChatServiceGateway {
     const chat = await this.chatService.getUserChatById(payload);
     const messages = await this.chatService.getMessages(payload);
     chat.users.forEach((user) => {
-      this.server.to(user.toString()).emit('seen' + chat._id, messages);
+      this.server.to(user.toString()).emit('seen:' + chat._id, messages);
     });
   }
 
