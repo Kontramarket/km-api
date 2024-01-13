@@ -80,9 +80,13 @@ export class ChatServiceGateway {
   }
 
   private async extractToken(token: string) {
-    const { userId } = await this.jwtService.verifyAsync(token, {
-      secret: jwtConstants.secret,
-    });
-    return userId;
+    try {
+      const { userId } = await this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.secret,
+      });
+      return userId;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
